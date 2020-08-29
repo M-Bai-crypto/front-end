@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>内部页面跳转</title>
+    <style>
+        .navigation {
+            float: left;
+            width: 150px;
+            height: 480px;
+            border: 1px solid silver;
+            margin-right: 30px;
+            padding-top: 30px;
+        }
+        .inner_link {
+            margin: 5px 30px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid silver;
+        }
+
+        .frame {
+            float: left;
+            border: 1px solid silver;
+        }
+
+        iframe {
+            width: 500px;
+            height: 500px;
+        }
+        a{
+            text-decoration: none;
+            color: blue;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!--导航框-->
+    <div class="navigation">
+        <!--导航链接-->
+        <div class="inner_link">
+            <a onclick="document.getElementById('frame').src = 'http://www.baidu.com';">
+                百度
+            </a>
+        </div>
+        <div class="inner_link">
+            <a onclick="document.getElementById('frame').src = 'http://www.taobao.com';">
+                淘宝
+            </a>
+        </div>
+        <div class="inner_link">
+            <a onclick="document.getElementById('frame').src = 'http://www.suning.com';">
+                苏宁
+            </a>
+        </div>
+        <div class="inner_link">
+            <a onclick="document.getElementById('frame').src = 'http://www.jd.com';">
+                京东
+            </a>
+        </div>
+
+    </div>
+
+
+    <!--内联框架-->
+    <div class="frame">
+        <iframe src="http://www.baidu.com" id="frame">
+
+        </iframe>
+    </div>
+
+</body>
+</html>
