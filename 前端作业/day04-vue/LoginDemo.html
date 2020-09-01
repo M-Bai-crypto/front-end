@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+
+    <script src="../vue.js"></script>
+    <style>
+        .input_hint {
+            float: right;
+        }
+    </style>
+</head>
+<body>
+<div id="root">
+
+
+    <table cellspacing="10">
+        <tr>
+            <td class="input_hint">
+                注册邮箱：
+            </td>
+            <td>
+                <input type="text" placeholder="请输入注册邮箱">
+            </td>
+        </tr>
+
+        <tr>
+            <td></td>
+            <td>
+                <a href="javascript:void(0)">你还可以手机注册</a>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="input_hint">
+                创建密码：
+            </td>
+            <td>
+                <input type="text" placeholder="请输入注册密码">
+            </td>
+        </tr>
+
+        <tr>
+            <td class="input_hint">
+                真实姓名：
+            </td>
+            <td>
+                <input type="text" placeholder="请输入真实姓名">
+            </td>
+        </tr>
+
+        <tr>
+            <td class="input_hint">
+                性别：
+            </td>
+            <td>
+                <input type="radio" name="sex">男
+                <input type="radio" name="sex">女
+            </td>
+        </tr>
+
+        <tr>
+            <td class="input_hint">
+                生日：
+            </td>
+            <td>
+                <input type="date">
+            </td>
+        </tr>
+
+        <tr>
+            <td class="input_hint">
+                我正在：
+            </td>
+            <td>
+                <select>
+                    <option selected>
+                        睡觉
+                    </option>
+                    <option>
+                        吃饭
+                    </option>
+                    <option>
+                        学习
+                    </option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td></td>
+            <td>
+                <img :src="imgPath" alt="图片加载失败">
+                <a href="javascript:void(0)" @click="changeImg">看不清，换一张</a>
+
+            </td>
+        </tr>
+
+        <tr>
+            <td class="input_hint">
+                验证码：
+            </td>
+            <td>
+                <input type="text" placeholder="请输入验证码" v-model="inputCode">
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <img src="btn_reg.gif" @click="verify">
+            </td>
+        </tr>
+    </table>
+
+</div>
+<script>
+
+    new Vue({
+        el: "#root",
+        data: {
+            verifyImgList: ["imgs/1111.png", "imgs/1234.png", "imgs/2222.png",
+                "imgs/3333.png", "imgs/4567.png"],
+            inputCode: "",
+            // 记录当前图片的验证码
+            verifyCode: "1111",
+            clickCount: 0,
+            imgPath: "imgs/1111.png"
+        },
+        methods: {
+            changeImg: function () {
+                // 从列表中拿到更换地址，点击更换为下一张
+                this.imgPath = this.verifyImgList[++this.clickCount];
+
+                // 保存更新的验证码
+                this.verifyCode = this.verifyImgList[this.clickCount].split("/")[1].split(".")[0];
+
+                // 实现验证码循环展示
+                // console.log(verifyCode);
+                if (this.clickCount === this.verifyImgList.length - 1) {
+                    this.clickCount = -1;
+                }
+                // console.log(this.verifyCode);
+            },
+
+            verify: function () {
+                // 进行匹配并弹出提示
+                if (this.inputCode === "") {
+                    alert("请输入验证码");
+                } else if (this.inputCode === this.verifyCode) {
+                    alert("登录成功");
+                } else {
+                    alert("验证码输入错误");
+                    this.changeImg();
+                }
+
+                // 清除输入框
+                this.inputCode = "";
+            }
+        }
+    })
+
+</script>
+
+</body>
+</html>

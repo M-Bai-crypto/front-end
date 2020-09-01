@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>随机点名</title>
+    <script src="../vue.js"></script>
+    <style>
+        .show-name {
+            width: 200px;
+            height: 200px;
+            margin: 40px auto;
+            background-color: #5bffcf;
+            line-height: 200px;
+            text-align: center;
+            font-size: 50px;
+        }
+
+        .div-bottom {
+            width: 70px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+
+<div id="root">
+
+    <div class="show-name">
+        {{msg}}
+    </div>
+    <div class="div-bottom">
+        <button @click="changeName">随机更换</button>
+
+    </div>
+
+
+</div>
+
+
+<script>
+    new Vue({
+        el: "#root",
+        data: {
+            list: [
+                "张三", "李四", "王五"
+            ],
+            msg: "",
+            number: -1
+        },
+        methods: {
+            changeName: function () {
+
+                var newNumber = Math.floor(Math.random() * this.list.length);
+                while (true) {
+                    if (this.number === newNumber) {
+                        newNumber = Math.floor(Math.random() * this.list.length);
+                    } else break;
+                }
+                console.log(newNumber)
+                this.msg = this.list[newNumber];
+                this.number = newNumber;
+            }
+        }
+    })
+</script>
+</body>
+</html>
