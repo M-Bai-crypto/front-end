@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>汇率换算</title>
+    <style>
+        .main {
+            width: 700px;
+            height: 700px;
+            margin: auto;
+        }
+
+        .demo_input {
+            margin: 5px 100px;
+        }
+
+        table {
+            width: 500px;
+            height: 100px;
+            margin: 5px 100px;
+        }
+
+        input, select {
+            height: 25px;
+        }
+
+        th {
+            background-color: red;
+        }
+
+        td {
+            width: 100px;
+            height: 30px;
+            text-align: center;
+        }
+
+        .input_money {
+            height: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="main">
+    <div class="demo_input">
+        <select id="select1">
+            <option selected>
+                人民币
+            </option>
+            <option>
+                美元
+            </option>
+        </select>
+        <input type="button" id="exchange_currency" value="互换" onclick="exchange()">
+        <select id="select2">
+            <option>
+                人民币
+            </option>
+            <option selected>
+                美元
+            </option>
+        </select>
+        金额:
+        <input type="text" class="input_money" id="input_num">
+        <input type="button" value="按汇率换算" id="calculate_money" onclick="calculate()">
+    </div>
+
+    <table border="1px solid">
+        <tr>
+            <th colspan="3">
+                按当前汇率换算结果
+            </th>
+        </tr>
+
+        <tr>
+            <td id="currency_name1">
+                人民币
+            </td>
+            <td>
+                汇率
+            </td>
+            <td id="currency_name2">
+                美元
+            </td>
+        </tr>
+
+        <tr>
+            <td id="current_num">
+
+            </td>
+            <td id="current_exchange_rate">
+
+            </td>
+            <td id="calculate_num">
+
+            </td>
+        </tr>
+    </table>
+</div>
+
+<script>
+    // 定义各货币到美元的汇率
+    var RMB = {
+        name: "人民币",
+        rate: 0.14
+    };
+    var Dollar = {
+        name: "美元",
+        rate: 1
+    };
+    var currencyCollect = [RMB, Dollar];
+
+    function exchange() {
+        // 获取两个下拉选的value
+        var select1 = document.getElementById("select1");
+        var select2 = document.getElementById("select2");
+
+        // 点击时互换value
+        var temp = select1.value;
+        select1.value = select2.value;
+        select2.value = temp;
+    }
+
+    function calculate() {
+        // 更改属性
+        var select1 = document.getElementById("select1");
+        var select2 = document.getElementById("select2");
+        document.getElementById("currency_name1").innerText = select1.value;
+        document.getElementById("currency_name2").innerText = select2.value;
+
+        // 对输入值进行判断默认取值
+        var inputValue = document.getElementById("input_num").value;
+        var currentNum = document.getElementById("current_num");
+        if (inputValue === "") {
+            currentNum.innerText = 0;
+        }else {
+            currentNum.innerText = inputValue.toString();
+        }
+
+        // 更改汇率并更新结果
+        var changeRate = document.getElementById("current_exchange_rate");
+        var calResult = document.getElementById("calculate_num");
+
+        // 遍历找到当前的两个汇率
+        var i, j;
+        for (var t = 0; t < currencyCollect.length; t++) {
+            if (currencyCollect[t].name === select1.value) {
+                i = t;
+            }
+            if (currencyCollect[t].name === select2.value) {
+                j = t;
+            }
+        }
+        // console.log(currencyCollect[i].name);
+        // console.log(currencyCollect[j].name);
+
+        var rate = currencyCollect[i].rate/ currencyCollect[j].rate;
+        changeRate.innerText = rate.toFixed(2);
+        calResult.innerText = (inputValue * rate).toFixed(2);
+    }
+</script>
+
+</body>
+</html>

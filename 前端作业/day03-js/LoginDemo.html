@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+
+    <style>
+        .input_hint {
+            float: right;
+        }
+    </style>
+</head>
+<body>
+<table cellspacing="10">
+    <tr>
+        <td class="input_hint">
+            注册邮箱：
+        </td>
+        <td>
+            <input type="text" placeholder="请输入注册邮箱">
+        </td>
+    </tr>
+
+    <tr>
+        <td></td>
+        <td>
+            <a href="javascript:void(0)">你还可以手机注册</a>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="input_hint">
+            创建密码：
+        </td>
+        <td>
+            <input type="text" placeholder="请输入注册密码">
+        </td>
+    </tr>
+
+    <tr>
+        <td class="input_hint">
+            真实姓名：
+        </td>
+        <td>
+            <input type="text" placeholder="请输入真实姓名">
+        </td>
+    </tr>
+
+    <tr>
+        <td class="input_hint">
+            性别：
+        </td>
+        <td>
+            <input type="radio" name="sex">男
+            <input type="radio" name="sex">女
+        </td>
+    </tr>
+
+    <tr>
+        <td class="input_hint">
+            生日：
+        </td>
+        <td>
+            <input type="date">
+        </td>
+    </tr>
+
+    <tr>
+        <td class="input_hint">
+            我正在：
+        </td>
+        <td>
+            <select>
+                <option selected>
+                    睡觉
+                </option>
+                <option>
+                    吃饭
+                </option>
+                <option>
+                    学习
+                </option>
+            </select>
+        </td>
+    </tr>
+
+    <tr>
+        <td></td>
+        <td>
+            <img src="imgs/1111.png" alt="图片加载失败" id="veryImg">
+            <a href="javascript:void(0)" onclick="changeImg()">看不清，换一张</a>
+
+        </td>
+    </tr>
+
+    <tr>
+        <td class="input_hint">
+            验证码：
+        </td>
+        <td>
+            <input type="text" placeholder="请输入验证码" id="inputStr">
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>
+            <img src="btn_reg.gif" onclick="verify()">
+        </td>
+    </tr>
+</table>
+
+
+<script>
+    var verifyImgList = ["imgs/1111.png", "imgs/1234.png", "imgs/2222.png", "imgs/3333.png", "imgs/4567.png"];
+
+    // 使用全局变量记录当前图片的验证码
+    var verifyCode = "1111";
+    var clickCount = 0;
+
+    function changeImg() {
+        // 获取当前图片的src
+        var veryImgNode = document.getElementById("veryImg");
+
+        // 从列表中拿到更换地址，点击更换为下一张
+        veryImgNode.src = verifyImgList[++clickCount];
+
+        // 保存更新的验证码
+        verifyCode = verifyImgList[clickCount].split("/")[1].split(".")[0];
+
+        // 实现验证码循环展示
+        // console.log(verifyCode);
+        if (clickCount === verifyImgList.length - 1) {
+            clickCount = -1;
+        }
+    }
+
+    function verify() {
+        // 获取当前输入框的验证码
+        var current_code = document.getElementById("inputStr");
+        // console.log(current_code.value);
+
+        // 进行匹配并弹出提示
+        if (current_code.value === "") {
+            alert("请输入验证码");
+        }else if (current_code.value === verifyCode) {
+            alert("登录成功");
+        }else {
+            alert("验证码输入错误");
+            changeImg();
+        }
+
+        // 清除输入框
+        current_code.value = "";
+    }
+</script>
+
+</body>
+</html>
