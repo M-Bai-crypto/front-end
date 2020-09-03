@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>内部页面跳转</title>
+    <!--使用组件传值实现-->
+    <style>
+        #root{
+            margin: 20px 20px;
+        }
+        .navigation{
+            float: left;
+            width: 150px;
+            height: 500px;
+            border: 1px solid silver;
+            padding: 10px 30px;
+        }
+        .navi-text {
+            color: blue;
+            line-height: 30px;
+            width: 120px;
+            height: 30px;
+            border-bottom: 1px solid silver;
+        }
+
+        iframe {
+            margin-left:50px ;
+            float: left;
+            width: 500px;
+            height: 500px;
+        }
+    </style>
+    <script src="../vue.js"></script>
+</head>
+<body>
+<div id="root">
+    <div class="navigation">
+        <nav1 v-for="(item,index) in name"
+              :key="index"
+              :webname="item"
+              :tag="index"
+              @linkupdate="link1">
+        </nav1>
+    </div>
+    <page :weblink="link"></page>
+</div>
+
+<script>
+    var navigation = {
+        template: '<div class="navi-text"><span @click="changelink">{{webname}}</span></div>',
+        props: ['webname', "tag"],
+        methods: {
+            changelink: function () {
+                this.$emit("linkupdate", this.tag)
+            }
+        }
+    };
+    var webpage = {
+        template: '<div><div class="frame"><iframe :src="weblink"></iframe></div></div>',
+        props: ['weblink']
+    };
+
+    new Vue({
+        el: "#root",
+        data: {
+            list: ["http://www.baidu.com", "http://www.taobao.com", "http://www.suning.com", "http://www.jd.com"],
+            name: ["百度", "淘宝", "苏宁", "京东"],
+            link: ""
+        },
+        methods: {
+            link1: function (linkaddress) {
+                this.link = this.list[linkaddress]
+            }
+        },
+        components: {
+            nav1: navigation,
+            page: webpage
+        }
+    })
+</script>
+</body>
+</html>
